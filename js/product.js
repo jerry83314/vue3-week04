@@ -1,23 +1,13 @@
 const { createApp, ref, onMounted } = Vue;
 let delProductModal = '';
 let productModal = '';
-
+const api_url = 'https://vue3-course-api.hexschool.io';
+const api_path = 'jyue-web';
 
 createApp({
   setup() {
-    const api_url = ref('https://vue3-course-api.hexschool.io');
-    const api_path = ref('jyue-web');
     const products = ref([]);
     const newProduct = ref({
-      // title: '',
-      // category: '',
-      // origin_price: 0,
-      // price: 0,
-      // unit: '',
-      // description: '',
-      // content: '',
-      // is_enabled: 1,
-      // imageUrl: '',
       imagesUrl: []
     });
     const isAdd = ref(true);
@@ -50,7 +40,7 @@ createApp({
 
     // 取得產品列表
     function getProduct() {
-      axios.get(`${api_url.value}/v2/api/${api_path.value}/admin/products/all`)
+      axios.get(`${api_url}/v2/api/${api_path}/admin/products/all`)
         .then((res) => {
           products.value = Object.values(res.data.products);
         })
@@ -61,7 +51,7 @@ createApp({
 
     // 新增產品
     function addProduct() {
-      axios.post(`${api_url.value}/v2/api/${api_path.value}/admin/product`, {
+      axios.post(`${api_url}/v2/api/${api_path}/admin/product`, {
         data: newProduct.value
       })
         .then((res) => {
@@ -79,7 +69,7 @@ createApp({
     // 刪除產品
     function delProduct() {
       const { id } = newProduct.value;
-      axios.delete(`${api_url.value}/v2/api/${api_path.value}/admin/product/${id}`)
+      axios.delete(`${api_url}/v2/api/${api_path}/admin/product/${id}`)
         .then((res) => {
           alert('刪除成功');
           // 關閉 modal
@@ -95,7 +85,7 @@ createApp({
     // 更新產品
     function updateProduct() {
       const { id } = newProduct.value
-      axios.put(`${api_url.value}/v2/api/${api_path.value}/admin/product/${id}`, {
+      axios.put(`${api_url}/v2/api/${api_path}/admin/product/${id}`, {
         data: newProduct.value
       })
         .then((res) => {
@@ -139,8 +129,6 @@ createApp({
     }
 
     return {
-      api_url,
-      api_path,
       newProduct,
       products,
       isAdd,
